@@ -52,7 +52,13 @@ class HomeController extends Controller
             $request->setTrustedProxies(array('10.32.0.1/16'));
             $this->ip = $request->getClientIp();
             $this->my_area = getAddr($this->ip);
-            Cookie::queue('area', $this->my_area, 24 * 60 * 10);
+            foreach ($this->areas as $area) {
+                if (mb_strrpos($area, $this->my_area) !== false) {
+                    Cookie::queue('area', $this->my_area, 24 * 60 * 10);
+                } else {
+                    Cookie::queue('area', '南京', 24 * 60 * 10);
+                }
+            }
         }
 
         /*获取pm25详细数据*/
