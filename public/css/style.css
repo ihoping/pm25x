@@ -1,0 +1,173 @@
+/*公共样式*/
+.selected {
+    background: #eee;
+    border-bottom: 4px solid #898989;
+}
+
+.selected2 {
+    background: #eee;
+    border-right: 4px solid #898989;
+}
+.base-select{
+    height: 30px;
+    background: none;
+    border: 2px solid #698B69;
+}
+a {
+    color: #454545;
+    text-decoration: none;
+}
+/*头部*/
+.wrap .header {
+    border-bottom: 1px solid #C4C4C4;
+    line-height: 30px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.wrap .header .address a {
+    color: #337ab7;
+}
+
+.wrap .header .address-search {
+    position: relative;
+}
+
+.wrap .header .address-search input {
+    position: absolute;
+    right: 10px;
+    width: 200px;
+    height: 30px;
+    border-radius: 42px;
+    border: none;
+    background: whitesmoke;
+    transition: .3s linear;
+}
+
+.wrap .header .address-search input:hover {
+    width: 300px;
+}
+
+.wrap .header .address-search button {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    outline: none;
+}
+
+.wrap .header .address-search button:before {
+    content: "\f002";
+    font-family: FontAwesome;
+    color: #324b4e;
+}
+
+/*导航*/
+.wrap .m-nav {
+    line-height: 70px;
+    font-size: 20px;
+    border-bottom: 1px solid #C4C4C4;
+}
+
+/*内容区*/
+.wrap .content {
+    /*margin-left: 100px;*/
+    /*margin-right: 100px;*/
+    padding-top: 10px;
+    /*border-bottom: 1px solid #C4C4C4;*/
+    /*background-image: url(../img/c-background.jpg);*/
+    background: #5F9EA0;
+    position: relative;
+}
+
+.wrap .content .more a {
+    color: #1E9E69;
+}
+
+.wrap .content .address-number p:first-child {
+    width: 60%;
+    font-size: 30px;
+    border-bottom: 1px solid #8B2323;
+}
+
+.wrap .content .address-number {
+    padding-left: 100px;
+}
+.wrap .content .address-number .note{
+    font-size: 16px;color: inherit;
+}
+.wrap .content  .update-time {
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+    font-style: italic;
+    color: #424242;
+}
+
+.wrap .chart1 {
+    padding-top: 20px;
+}
+
+.wrap .chart2 {
+    padding-top: 20px;
+}
+
+.wrap .sites .sites-list {
+    height: 230px;
+    overflow: auto;
+}
+
+/*rank*/
+.wrap .rank-desc {
+    background: #66A89A;
+    padding-bottom: 10px;
+    color: white;
+}
+
+.wrap .rank-classify {
+    font-size: 18px;
+}
+
+.wrap .rank-content .table-head {
+    font-weight: bold;
+}
+
+/*可视化chart*/
+.wrap .visual-desc {
+    background: #698B69;
+    padding-bottom: 10px;
+    color: white;
+}
+.wrap .visual-chart{
+    padding-top: 10px;
+    font-size: 16px;
+}
+
+.wrap .visual-chart .date-select{
+    width: 50%;
+
+    padding-bottom: 2px;
+    margin-bottom: 20px;
+}
+
+/*news*/
+.wrap .news-desc {
+    background: #7DB364;
+    padding-bottom: 10px;
+    color: white;
+}
+.wrap .news-content{
+    margin-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+/*footer*/
+.wrap .footer {
+    background: #F1F1F1;
+    padding-top: 10px;
+}
+
+.wrap .footer .copyright {
+    font-style: italic;
+    color: #5E5E5E;
+}
