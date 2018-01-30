@@ -26,8 +26,7 @@ function getAddr($ip)
     curl_setopt($curl, CURLOPT_FAILONERROR, false);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HEADER, false);
-    if (1 == strpos("$".$host, "https://"))
-    {
+    if (1 == strpos("$" . $host, "https://")) {
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
     }
@@ -53,8 +52,7 @@ function pm25_detail($city)
     curl_setopt($curl, CURLOPT_FAILONERROR, false);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HEADER, false);
-    if (1 == strpos("$".$host, "https://"))
-    {
+    if (1 == strpos("$" . $host, "https://")) {
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
     }
@@ -92,5 +90,41 @@ function getPast24hour($now)
         $data[] = date('YmdH', strtotime("-{$i} hour", strtotime($now)));
         $i--;
     }
-   var_dump($data);
+    var_dump($data);
+}
+
+function pm25_top()
+{
+    $host = "https://ali-pm25.showapi.com";
+    $path = "/pm25-top";
+    $method = "GET";
+    $appcode = "50877461394c49ea89733c51498af352";
+    $headers = array();
+    array_push($headers, "Authorization:APPCODE " . $appcode);
+    $url = $host . $path;
+
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($curl, CURLOPT_FAILONERROR, false);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HEADER, false);
+    if (1 == strpos("$" . $host, "https://")) {
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+    }
+    $data = [];
+    $content = json_decode(curl_exec($curl), true);
+    if ($content) {
+        foreach ($content['showapi_res_body']['list'] as $row) {
+            $data[] = [
+                'num' => $row['num'],
+                'area' => $row['area'],
+                'pm25' => $row['pm2_5'],
+                'aqi' => $row['aqi']
+            ];
+        }
+    }
+    return $data;
 }

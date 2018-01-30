@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/kuCity.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.min.css') }}">
 </head>
 <body>
 
@@ -128,6 +129,7 @@
 <script src="{{ asset('js/echarts.js') }}"></script>
 <script src="{{ asset('js/kuCity.js') }}"></script>
 <script src="{{ asset('js/china.js') }}"></script>
+<script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
 <script>
     $.ajaxSetup({
         headers: {

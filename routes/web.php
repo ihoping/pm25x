@@ -19,7 +19,7 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/news', 'NewsController@index');
 
-Route::get('/rank', 'RankController@index');
+Route::get('/rank/{type?}', 'RankController@index');
 
 Route::get('/visual', 'VisualController@index');
 
