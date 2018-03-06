@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/kuCity.css') }}">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-datetimepicker/2.1.30/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.min.css') }}">
 </head>
 <body>
 
@@ -129,7 +129,7 @@
 <script src="https://cdn.bootcss.com/echarts/4.0.4/echarts.min.js"></script>
 <script src="{{ asset('js/kuCity.js') }}"></script>
 <script src="{{ asset('js/china.js') }}"></script>
-<script src="https://cdn.bootcss.com/bootstrap-datetimepicker/2.1.30/js/bootstrap-datetimepicker.min.js"></script>
+<script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
 <script>
     $.ajaxSetup({
         headers: {
