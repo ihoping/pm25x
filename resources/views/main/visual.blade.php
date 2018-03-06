@@ -52,7 +52,7 @@
         }
         var china_map = echarts.init(document.getElementById('china-map'));
         var option = {
-            title:{text:'2018-01-18 PM25概念图',
+            title:{text:'2018-01-19 PM25概念图',
                 left:'30%'
             },
             tooltip: {
