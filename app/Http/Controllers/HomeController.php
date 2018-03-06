@@ -64,7 +64,7 @@ class HomeController extends Controller
         /*获取pm25详细数据*/
         $pm25_details = pm25_detail($this->my_area);
         if (!$pm25_details) {
-            abort(404, '抱歉，网络断了一会儿<a href="' . url('/') . '" style="color: #1b6d85">重新刷新</a>');
+            abort(504, '抱歉，请求超时<a href="' . url('/') . '" style="color: #1b6d85">重新刷新</a>');
         }
 
         /*获取最近24小时pm25以及aqi数据*/
