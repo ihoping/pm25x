@@ -13,29 +13,12 @@ class HomeController extends Controller
        * 用户真实ip
        */
     private $ip = [];
-    /*
-     * 全部地区数组
-     */
-    private $areas = [];
-    /*
+
+    /**
      * 用户所在地区
      * String
      */
     private $my_area = '';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $areas_obj = Areas::all();
-        foreach ($areas_obj as $row) {
-            $this->areas[] = $row->name;
-        }
-
-    }
 
     /**
      * Show the application dashboard.
@@ -44,33 +27,20 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        /*地区*/
-        if (Cookie::has('area')) {
-            $this->my_area = Cookie::get('area');
-            //dd($this->my_area);
-        } else {
-            $request->setTrustedProxies(array('10.32.0.1/16'));
-            $this->ip = $request->getClientIp();
-            $this->my_area = getAddr($this->ip);
-            foreach ($this->areas as $area) {
-                if (mb_strrpos($area, $this->my_area) !== false) {
-                    Cookie::queue('area', $this->my_area, 24 * 60 * 10);
-                } else {
-                    Cookie::queue('area', '南京', 24 * 60 * 10);
-                }
-            }
-        }
+        /**
+         * 设置地区
+         */
+        $this->setArea($request);
 
         /*获取pm25详细数据*/
         $pm25_details = pm25_detail($this->my_area);
-        if (!$pm25_details) {
+
+        if (!$pm25_details) {//如果因为网络原因获取失败
             abort(504, '抱歉，请求超时<a href="' . url('/') . '" style="color: #1b6d85">重新刷新</a>');
         }
 
         /*获取最近24小时pm25以及aqi数据*/
-        $today = '2017-09-01';
-        $hour = 13;
-        $recent_24_data = Data::where('day', '<', $today)->where('hour', '<', $hour)->where('area', $this->my_area)->orderBy('day', 'desc')->take(24)->get()->toArray();
+        $recent_24_data = Data::where('area', $this->my_area)->orderBy('id', 'desc')->take(24)->get()->toArray();
 
         $data = [
             'nav' => 'home',
@@ -83,7 +53,6 @@ class HomeController extends Controller
             'recent_24_pm25' => array_reverse(array_column($recent_24_data, 'pm25')),
         ];
 
-        //dd(Cookie::get('area'));
         return view('main.home', $data);
     }
 
@@ -92,8 +61,13 @@ class HomeController extends Controller
      */
     public function changeArea(Request $request)
     {
-        $sub_area = $request->area;
-        foreach ($this->areas as $area) {
+        $areas_obj = Areas::all();
+        foreach ($areas_obj as $row) {
+            $areas[] = $row->name;
+        }
+
+        $sub_area = $request->area;//用户提交的地区
+        foreach ($areas as $area) {
             if (mb_strrpos($area, $sub_area) !== false) {
                 return response()->json([
                     'area' => $area,
@@ -101,8 +75,35 @@ class HomeController extends Controller
                 ])->cookie('area', $area, 24 * 60 * 10);
             }
         }
+
         return response()->json([
             'status' => 0
         ]);
+    }
+
+    /*
+     * 设置地区
+     */
+    private function setArea(Request $request)
+    {
+        if (Cookie::has('area')) {//如果cookie里有地区信息了
+            $this->my_area = Cookie::get('area');
+            //dd($this->my_area);
+        } else {//没有再去获取
+            $request->setTrustedProxies(array('10.32.0.1/16'));
+            $this->ip = $request->getClientIp();
+            $this->my_area = getAddr($this->ip);
+            $areas_obj = Areas::all();
+            foreach ($areas_obj as $row) {
+                $areas[] = $row->name;
+            }
+            foreach ($areas as $area) {
+                if (mb_strrpos($area, $this->my_area) !== false) {
+                    Cookie::queue('area', $this->my_area, 24 * 60 * 10);
+                } else {
+                    Cookie::queue('area', '南京', 24 * 60 * 10);
+                }
+            }
+        }
     }
 }
