@@ -25,6 +25,7 @@ class RankController extends Controller
     private $my_area = '';
 
     private $rank_types = ['now', 'yesterday', '7day', 'last_month'];
+
     /**
      * Create a new controller instance.
      *
@@ -79,11 +80,10 @@ class RankController extends Controller
 
     private function getRankData($type)
     {
-        $data = [];
         if ($type == 'now') {
-             return [pm25_top(), '最后更新于:' . date('Y-m-d H:i:s')];
+            return [pm25_top(), '最后更新于:' . date('Y-m-d H:i:s')];
         } else if ($type == 'yesterday') {
-            $yesterday = '2017-08-23';
+            $yesterday = date('Y-m-d', strtotime('-1 day'));
             $res = Data::where('day', $yesterday)->groupBy('area')->orderBy('aqi')->get([
                 'area',
                 DB::raw('avg(pm25) as pm25'),
@@ -91,8 +91,8 @@ class RankController extends Controller
             ])->toArray();
             $data = [$res, '以下数据为' . $yesterday . '当天的平均值'];
         } else if ($type == '7day') {
-            $today = '2017-09-01';
-            $pre_7_day = date('Y-m-d', strtotime('-7 day', strtotime($today)));
+            $today = date('Y-m-d');
+            $pre_7_day = date('Y-m-d', strtotime('-7 day'));
             $res = Data::where('day', '<=', $today)->where('day', '>=', $pre_7_day)->groupBy('area')->orderBy('aqi')->get([
                 'area',
                 DB::raw('avg(pm25) as pm25'),
@@ -100,10 +100,8 @@ class RankController extends Controller
             ])->toArray();
             $data = [$res, '区间:' . $pre_7_day . '至' . $today];
         } else if ($type == 'last_month') {
-            $today = '2017-09-01';
-            $last_month_start = date('Y-m-01', strtotime('-1 month', strtotime($today)));
+            $last_month_start = date('Y-m-01', strtotime('-1 month'));
             $last_month_end = date('Y-m-d', strtotime('+1 month -1 day', strtotime($last_month_start)));
-
             $res = Data::where('day', '<=', $last_month_end)->where('day', '>=', $last_month_start)->groupBy('area')->orderBy('aqi')->get([
                 'area',
                 DB::raw('avg(pm25) as pm25'),
