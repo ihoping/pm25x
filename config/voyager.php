@@ -121,11 +121,7 @@ return [
         /*
          * Set whether or not the multilingual is supported by the BREAD input.
          */
-<<<<<<< HEAD
-        'enabled' => false,
-=======
         'enabled' => true,
->>>>>>> 155c71c795a23e9c96a619c09947a27ed80be420
 
         /*
          * Select default language
@@ -137,10 +133,7 @@ return [
          */
         'locales' => [
             'en',
-<<<<<<< HEAD
             //'pt',
-=======
->>>>>>> 155c71c795a23e9c96a619c09947a27ed80be420
         ],
     ],
 
