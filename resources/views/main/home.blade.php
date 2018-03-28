@@ -5,31 +5,12 @@
         <div class="col-md-6 address-number">
             <p><i class="icon-map-marker"></i> {{ $pm25_details['area'] }}</p>
             <div id="data-number" style="height: 300px"></div>
-            <!--<div class="pm25">-->
-            <!--<div class="info">-->
-            <!--<span class="number">300μg/m³</span>-->
-            <!--<span class="level">严重污染</span>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--<p class="rank-info">AQI指数为<strong>158</strong>:击败了全国 <strong>79%</strong> 的城市，目前城市排名<strong>75</strong></p>-->
             <p class="note"><strong>温馨提示</strong>：空气质量可接受，但某些污染物可能对极少异常敏感人群健康有较弱影响。极少数异常敏感人群减少户外活动
             </p>
         </div>
         <div class="col-md-6 sites">
             <div id="sites-list" style="height: 350px"></div>
         </div>
-        <!--<div class="col-md-3 news">-->
-        <!--<div class="panel panel-success">-->
-        <!--&lt;!&ndash; Default panel contents &ndash;&gt;-->
-        <!--<div class="panel-heading">最新资讯<span class="more"><a href="#">/更多</a></span></div>-->
-        <!--&lt;!&ndash; List group &ndash;&gt;-->
-        <!--<ul class="list-group">-->
-        <!--<li class="list-group-item"><a>新一代雾霾神器诞生</a><span class="badge">new</span></li>-->
-        <!--<li class="list-group-item"><a>防霾口罩推荐</a></li>-->
-        <!--<li class="list-group-item"><a>pm2.5等级说明</a></li>-->
-        <!--</ul>-->
-        <!--</div>-->
-        <!--</div>-->
         <div class="update-time">*数据最后更新于 {{ $pm25_details['last_up'] }}</div>
     </div>
     <div class="row chart2">
@@ -223,7 +204,7 @@
                 trigger: 'axis'
             },
             legend: {
-                data:['最高值','最低值']
+                data: ['最高值', '最低值']
             },
             toolbox: {
                 show: true,
@@ -235,10 +216,10 @@
                     saveAsImage: {}
                 }
             },
-            xAxis:  {
+            xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: ['20170712','20170713','20170714','20170715','20170716','20170717','20170718']
+                data: ['20170712', '20170713', '20170714', '20170715', '20170716', '20170717', '20170718']
             },
             yAxis: {
                 type: 'value',
@@ -248,9 +229,9 @@
             },
             series: [
                 {
-                    name:'最高浓度',
-                    type:'line',
-                    data:[11, 11, 15, 13, 12, 13, 10],
+                    name: '最高浓度',
+                    type: 'line',
+                    data: [11, 11, 15, 13, 12, 13, 10],
                     markPoint: {
                         data: [
                             {type: 'max', name: '最大值'},
@@ -264,9 +245,9 @@
                     }
                 },
                 {
-                    name:'最低浓度',
-                    type:'line',
-                    data:[1, -2, 2, 5, 3, 2, 0],
+                    name: '最低浓度',
+                    type: 'line',
+                    data: [1, -2, 2, 5, 3, 2, 0],
                     markPoint: {
                         data: [
                             {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
@@ -308,7 +289,7 @@
                     color: [new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                         offset: 0,
                         color: '#FFFFFF'
-                    }, ]), "transparent"],
+                    },]), "transparent"],
                     labelLine: {
                         normal: {
                             show: false
@@ -408,7 +389,7 @@
                     },
                     data: [
                         {
-                            value: '{{ $pm25_details['rank'] }}',
+                            value: 100 - '{{ $pm25_details['rank'] }}',
                             name: '占有率',
                             label: {
                                 normal: {
@@ -417,13 +398,14 @@
                                         fontSize: 30
                                     }
                                 }
-                            }},
+                            }
+                        },
                         {
-                            value: 100 - '{{ $pm25_details['rank'] }}',
+                            value: '{{ $pm25_details['rank'] }}',
                             name: '占位',
                             label: {
                                 normal: {
-                                    formatter: '\n全国排行',
+                                    formatter: '\n击败城市',
                                     textStyle: {
                                         color: '#555',
                                         fontSize: 15
@@ -452,42 +434,49 @@
     <script>
         var sites_list = echarts.init(document.getElementById('sites-list'));
         var dataAll = [{{ implode(',', $sites_pm25_list) }}];
-        var yAxisData =[
-                @foreach ($sites_name_list as $v)
-                    '{{ $v }}',
-                @endforeach
+        var yAxisData = [
+            @foreach ($sites_name_list as $v)
+                '{{ $v }}',
+            @endforeach
         ];
         var option = {
             backgroundColor: '#5F9EA0',
             grid: [
                 {x: '20%'},
             ],
-            title:[
-                {text:"各监测点数据",
-                    left:'10%',
-                    textStyle:{color:"#333",fontSize:"20", fontWeight:'100'},
+            title: [
+                {
+                    text: "各监测点数据",
+                    left: '10%',
+                    textStyle: {color: "#333", fontSize: "20", fontWeight: '100'},
                 },
             ],
             tooltip: {
                 formatter: '{b} ({c})'
             },
             xAxis: [
-                {gridIndex: 0, axisTick: {show:false},axisLabel: {show:false},splitLine: {show:false},axisLine: {show:false }},
+                {
+                    gridIndex: 0,
+                    axisTick: {show: false},
+                    axisLabel: {show: false},
+                    splitLine: {show: false},
+                    axisLine: {show: false}
+                },
             ],
             yAxis: [
                 {
-                    offset:2,
-                    gridIndex: 0, interval:0,data:yAxisData.reverse(),
-                    axisTick: {show:false}, axisLabel: {show:true},splitLine: {show:false},
-                    axisLine: {show:true,fontSize:"20", lineStyle:{color:"#4A4A4A"}},
+                    offset: 2,
+                    gridIndex: 0, interval: 0, data: yAxisData.reverse(),
+                    axisTick: {show: false}, axisLabel: {show: true}, splitLine: {show: false},
+                    axisLine: {show: true, fontSize: "20", lineStyle: {color: "#4A4A4A"}},
                 }
             ],
             series: [
                 {
                     name: '各监测点数据',
-                    type: 'bar',xAxisIndex: 0,yAxisIndex: 0,barWidth:'45%',
-                    itemStyle:{normal:{color:'#fff',fontSize:'20'}},
-                    label:{normal:{show:true, position:"right",textStyle:{color:"#4A4A4A"}}},
+                    type: 'bar', xAxisIndex: 0, yAxisIndex: 0, barWidth: '45%',
+                    itemStyle: {normal: {color: '#fff', fontSize: '20'}},
+                    label: {normal: {show: true, position: "right", textStyle: {color: "#4A4A4A"}}},
                     data: dataAll.sort(),
                 },
 
