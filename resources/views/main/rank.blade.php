@@ -5,7 +5,7 @@
         <div class="col-md-1"></div>
         <div class="col-md-10">
             <h1>国内城市排行</h1>
-            <em>*数据最后更新于 2018-01-20 12:02</em>
+            <em>*数据最后更新于 {{ date('Y-m-d H:02:00') }}</em>
         </div>
         <div class="col-md-1"></div>
     </div>

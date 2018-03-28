@@ -98,7 +98,7 @@ class RankController extends Controller
                 DB::raw('avg(pm25) as pm25'),
                 DB::raw('avg(aqi) as aqi'),
             ])->toArray();
-            $data = [$res, '区间:' . $pre_7_day . '至' . $today];
+            $data = [$res, '以下为' . $pre_7_day . '至' . $today . '的平均数据'];
         } else if ($type == 'last_month') {
             $last_month_start = date('Y-m-01', strtotime('-1 month'));
             $last_month_end = date('Y-m-d', strtotime('+1 month -1 day', strtotime($last_month_start)));
@@ -107,14 +107,14 @@ class RankController extends Controller
                 DB::raw('avg(pm25) as pm25'),
                 DB::raw('avg(aqi) as aqi'),
             ])->toArray();
-            $data = [$res, '区间:' . $last_month_start . '至' . $last_month_end];
+            $data = [$res, '以下为' . $last_month_start . '至' . $last_month_end . '的平均数据'];
         } else {//具体日期
             $res = Data::where('day', $type)->groupBy('area')->orderBy('aqi')->get([
                 'area',
                 DB::raw('avg(pm25) as pm25'),
                 DB::raw('avg(aqi) as aqi'),
             ])->toArray();
-            $data = [$res, '选择的日期为:' . $type];
+            $data = [$res, '您选择的日期为:' . $type];
         }
         //添加排名
         for ($i = 0; $i < count($data[0]); $i++) {
