@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Areas;
+use App\Posts;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 
@@ -21,14 +23,34 @@ class NewsController extends Controller
     //
     public function index(Request $request)
     {
+        //($request->route('id'));
         $this->setArea($request);
 
+        $posts = Posts::OrderBy('id', 'desc')->paginate(10);
+//        dd($posts);
         $data = [
             'nav' => 'news',
-            'area' => $this->my_area
+            'area' => $this->my_area,
+            'posts' => $posts,
         ];
 
         return view('main.news', $data);
+    }
+
+    public function detail(Request $request)
+    {
+        $this->setArea($request);
+        $post_id = $request->route('id');
+        $post = Posts::where('id', $post_id)->get()->toArray();
+        if (!$post) abort(404, '文章不存在！');
+
+        $data = [
+            'nav' => 'news',
+            'area' => $this->my_area,
+            'post' => $post[0]
+        ];
+//        dd($request->route('id'));
+        return view('main.detail', $data);
     }
 
     /*
