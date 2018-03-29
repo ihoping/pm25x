@@ -161,6 +161,17 @@ a {
     padding-left: 30px;
     padding-right: 30px;
 }
+/*news*/
+.wrap .news-content .news-title{
+    color: #4c4c4c;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.wrap .news-content .news-publisher{
+    color: rgb(180, 184, 187);
+    font-size: 13px;
+}
 /*footer*/
 .wrap .footer {
     background: #F1F1F1;

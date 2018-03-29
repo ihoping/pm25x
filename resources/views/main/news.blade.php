@@ -10,42 +10,57 @@
         <div class="col-md-1"></div>
     </div>
     <div class="row news-content">
-        <div class="col-md-12">
-                <!-- List group -->
-                <ul class="list-group">
-                    <li class="list-group-item" style="border-bottom: 1px solid #ddd">Cras justo odio</li>
-                    <li class="list-group-item" style="border-bottom: 1px solid #ddd">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Morbi leo risus</li>
-                    <li class="list-group-item">Porta ac consectetur ac</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
-                    <li class="list-group-item">Cras justo odio</li>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Morbi leo risus</li>
-                    <li class="list-group-item">Porta ac consectetur ac</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
-
-                </ul>
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li>
-                        <a href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li>
-                        <a href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+        <div class="col-md-1"></div>
+        <div class="col-md-10" style="background: #F9F9F9; line-height: 40px; border-radius: 10px">
+            <div class="row">
+                <div class="col-md-2">
+                    <a href="#"><img src="storage/news/example.jpg" width="120" height="80" /></a>
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="news-title">南方多地百花争艳 踏春赏景正当时</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="news-publisher">中国新闻网 2018-03-29 10:18</span>
+                        </div>
+                    </div>
+                </div>
             </div>
+            </div>
+        <div class="col-md-1"></div>
     </div>
+    <div class="row news-content">
+        <div class="col-md-1"></div>
+        <div class="col-md-10" style="background: #F9F9F9; line-height: 40px; border-radius: 10px">
+            <div class="row">
+                <div class="col-md-2">
+                    <a href="#"><img src="storage/news/example.jpg" width="120" height="80" /></a>
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="news-title">南方多地百花争艳 踏春赏景正当时</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="news-publisher">中国新闻网 2018-03-29 10:18</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <nav aria-label="...">
+        <ul class="pager">
+            <li class="disabled"><a href="#">Previous</a></li>
+            <li><a href="#">Next</a></li>
+        </ul>
+    </nav>
 @endsection
 @section('script')
 @endsection
