@@ -35,22 +35,22 @@
         var province_map = echarts.init(document.getElementById('province-map'));
         var geoCoordMap = {};
         var data = [
-            {name: '赣州市', value: 199},
-            {name: '吉安市', value: 39},
-            {name: '上饶市', value: 152},
-            {name: '九江市', value: 299},
-            {name: '抚州市', value: 89},
-            {name: '宜春市', value: 52},
-            {name: '南昌市', value: 9},
-            {name: '景德镇市', value: 352},
-            {name: '萍乡市', value: 99},
-            {name: '鹰潭市', value: 39},
-            {name: '新余市', value: 480},
+            {name: '南京市', value: 199},
+            // {name: '吉安市', value: 39},
+            // {name: '上饶市', value: 152},
+            // {name: '九江市', value: 299},
+            // {name: '抚州市', value: 89},
+            // {name: '宜春市', value: 52},
+            // {name: '南昌市', value: 9},
+            // {name: '景德镇市', value: 352},
+            // {name: '萍乡市', value: 99},
+            // {name: '鹰潭市', value: 39},
+            // {name: '新余市', value: 480},
         ];
         var toolTipData = [
-            {name:"九江市",value:[{name:"pm25",value:199},{name:"aqi",value:199}]},
-            {name:"南昌市",value:[{name:"pm25",value:132},{name:"aqi",value:123}]},
-            {name:"吉安市",value:[{name:"pm25",value:19},{name:"aqi",value:99}]},
+            {name:"南京市",value:[{name:"pm25",value:199},{name:"aqi",value:199}]},
+            // {name:"南昌市",value:[{name:"pm25",value:132},{name:"aqi",value:123}]},
+            // {name:"吉安市",value:[{name:"pm25",value:19},{name:"aqi",value:99}]},
         ];
         var max = 480, min = 9; // todo
         var maxSize4Pin = 100, minSize4Pin = 20;
@@ -68,8 +68,9 @@
             }
             return res;
         };
+
         province_map.showLoading();
-        var mapFeatures = echarts.getMap('江西').geoJson.features;
+        var mapFeatures = echarts.getMap('{{ $province_name }}').geoJson.features;
         province_map.hideLoading();
         mapFeatures.forEach(function(v) {
             // 地区名称
@@ -78,10 +79,10 @@
             geoCoordMap[name] = v.properties.cp;
 
         });
-
+        console.log(geoCoordMap);
         option = {
             title: {
-                text: '2017-01-12 江西空气质量总览',
+                text: '2017-01-12 {{ $province_name }}空气质量总览',
                 subtext: '',
                 x: 'center',
             },
@@ -163,7 +164,7 @@
             // },
             geo: {
                 show: true,
-                map: '江西',
+                map: '{{ $province_name }}',
                 label: {
                     normal: {
                         show: false
@@ -209,7 +210,7 @@
             },
                 {
                     type: 'map',
-                    map: '江西',
+                    map: '{{ $province_name }}',
                     geoIndex: 0,
                     aspectScale: 0.75, //长宽比
                     showLegendSymbol: false, // 存在legend时显示
@@ -401,4 +402,24 @@
         });
     </script>
 
+    <script>
+        //同步数据
+        var url = 'https://sjipiao.alitrip.com/city_search.do?_ksTS=1439362066383_11337&lines=10&_input_charset=utf-8&needProvince=true&q=' + '{{ $province_name }}';
+
+        $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'jsonp'
+        }).done(function(re) {
+            console.log(re)
+        });
+
+        var mapFeatures = echarts.getMap('{{ $province_name }}').geoJson.features;
+        var newMap = [];
+        mapFeatures.forEach(function(v) {
+            newMap.push(v.properties.name);
+        });
+        console.log(newMap);
+
+    </script>
 @endsection

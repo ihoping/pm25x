@@ -3,10 +3,10 @@
 @section('content')
     <div class="row content">
         <div class="col-md-6 address-number">
-            <p><i class="icon-map-marker"></i> {{ $pm25_details['area'] }}</p>
+            <p><i class="icon-map-marker"></i> {{ $pm25_details['area'] }}|优</p>
             <div id="data-number" style="height: 300px"></div>
-            <p class="note"><strong>温馨提示</strong>：空气质量可接受，但某些污染物可能对极少异常敏感人群健康有较弱影响。极少数异常敏感人群减少户外活动
-            </p>
+            <p><strong>温馨提示：</strong><span class="note">空气质量可接受，但某些污染物可能对极少异常敏感人群健康有较弱影响。极少数异常敏感人群减少户外活动</span></p>
+
         </div>
         <div class="col-md-6 sites">
             <div id="sites-list" style="height: 350px"></div>
@@ -33,6 +33,22 @@
     </div>
 @endsection
 @section('script')
+    <script>
+        var aqi = '{{ $pm25_details['aqi'] }}';
+        if (aqi >=0 && aqi <= 50) {
+            $('.note').text('空气质量令人满意，基本无空气污染')
+        } else if (aqi >=51 && aqi <= 100) {
+            $('.note').text('空气质量可接受，但某些污染物可能对极少数异常敏感人群健康有较弱影响')
+        } else if (aqi >=101 && aqi <= 150) {
+            $('.note').text('易感人群症状有轻度加剧，健康人群出现刺激症状')
+        } else if (aqi >=151 && aqi <= 200) {
+            $('.note').text('进一步加剧易感人群症状，可能对健康人群心脏、呼吸系统有影响')
+        } else if (aqi >=201 && aqi <= 300) {
+            $('.note').text('心脏病和肺病患者症状显著加剧，运动耐受力降低，健康人群普遍出现症状')
+        }else if (aqi > 300) {
+            $('.note').text('健康人群运动耐受力降低，有明显强烈症状，提前出现某些疾病')
+        }
+    </script>
     <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var data_24h = echarts.init(document.getElementById('data-24h'));
@@ -219,7 +235,11 @@
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: ['20170712', '20170713', '20170714', '20170715', '20170716', '20170717', '20170718']
+                data: [
+                    @foreach ($forecast[0] as $v)
+                        '{{ $v }}',
+                    @endforeach
+                ]
             },
             yAxis: {
                 type: 'value',
@@ -231,7 +251,11 @@
                 {
                     name: '最高浓度',
                     type: 'line',
-                    data: [11, 11, 15, 13, 12, 13, 10],
+                    data: [
+                        @foreach ($forecast[1] as $v)
+                            {{ $v }},
+                        @endforeach
+                    ],
                     markPoint: {
                         data: [
                             {type: 'max', name: '最大值'},
@@ -247,7 +271,11 @@
                 {
                     name: '最低浓度',
                     type: 'line',
-                    data: [1, -2, 2, 5, 3, 2, 0],
+                    data: [
+                        @foreach ($forecast[2] as $v)
+                            {{ $v }},
+                        @endforeach
+                    ],
                     markPoint: {
                         data: [
                             {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}

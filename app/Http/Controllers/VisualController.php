@@ -6,6 +6,7 @@ use App\Areas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
+use PhpParser\Node\Expr\Array_;
 
 class VisualController extends Controller
 {
@@ -19,26 +20,93 @@ class VisualController extends Controller
      */
     private $my_area = '';
 
+    private $tabs = ['country', 'province', 'city', 'other'];
+
     //
     public function index(Request $request)
     {
         $this->setArea($request);
         $tab = $request->get('tab') ? $request->get('tab') : 'country';
-        if (!in_array($tab, ['country', 'province', 'city', 'other'])) abort(404, '无此tab');
-//        dd($request->get('kk'));
-        $provinces = ['北京', '天津', '河北', '山西', '内蒙古', '辽宁', '吉林', '黑龙江', '上海', '江苏', '浙江', '安徽', '福建', '江西', '山东', '河南', '湖北', '湖南', '广东', '广西', '海南', '重庆', '四川', '贵州', '云南', '西藏', '陕西', '甘肃', '青海', '宁夏', '新疆', '台湾', '香港', '澳门'];
+        if (!in_array($tab, $this->tabs)) abort(404, '无此tab');
+
+        $data = $this->getData($tab, $request);
+
+
+        return view('main.visual.' . $tab, $data);
+    }
+
+    /**
+     * 通过tab获取数据
+     * @param $tab
+     * @param Request $request
+     * @return mixed
+     *
+     */
+    private function getData($tab, Request $request)
+    {
+        $func = 'get' . ucfirst($tab) . 'data';
+        $data = $this->$func($request);
+        return $data;
+    }
+
+    private function getCountryData(Request $request)
+    {
+        $type = $request->get('type') ? $request->get('type') : 'day';
+        $date = $request->get('date') ? $request->get('date') : date('Y-m-d');
+        //dd($type . $date);
+
         $data = [
             'nav' => 'visual',
             'area' => $this->my_area,
-            'tab' => $tab,
-            'provinces' => $provinces,
-            'province_js' => asset("js/province/jiangxi.js")
+            'tab' => 'country'
         ];
-        return view('main.visual.' . $tab, $data);
+        return $data;
     }
-    /*
-   * 设置地区
-   */
+
+    private function getProvinceData(Request $request)
+    {
+        $province_name = $request->get('province') ? $request->get('province') : '江苏';
+//        dd($province);
+        $provinces = ['beijing' => '北京', 'tianjin' => '天津', 'hebei' => '河北', 'shanxi' => '山西', 'neimenggu' => '内蒙古', 'liaoning' => '辽宁', 'jilin' => '吉林', 'heilongjiang' => '黑龙江', 'shanghai' => '上海', 'jiangsu' => '江苏', 'zhejiang' => '浙江', 'anhui' => '安徽', 'fujian' => '福建', 'jiangxi' => '江西', 'shandong' => '山东', 'henan' => '河南', 'hubei' => '湖北', 'hunan' => '湖南', 'guangdong' => '广东', 'guangxi' => '广西', 'hainan' => '海南', 'chongqing' => '重庆', 'sichuan' => '四川', 'guizhou' => '贵州', 'yunnan' => '云南', 'xizang' => '西藏', 'shanxi1' => '陕西', 'gansu' => '甘肃', 'qinghai' => '青海', 'ningxia' => '宁夏', 'xinjiang' => '新疆', 'xianggang' =>  '香港', 'aomen' => '澳门'];
+
+        if (!in_array($province_name, $provinces)) abort(404, '无此地区');
+        $tmp = array_keys($provinces, $province_name);
+        $data = [
+            'nav' => 'visual',
+            'area' => $this->my_area,
+            'tab' => 'province',
+            'provinces' => $provinces,
+            'province_name' => $province_name,
+            'province_js' => asset('js/province/' . $tmp[0] . '.js')
+        ];
+        //dd($data);
+        return $data;
+    }
+
+    private function getCityData(Request $request)
+    {
+        $data = [
+            'nav' => 'visual',
+            'area' => $this->my_area,
+            'tab' => 'city'
+        ];
+        return $data;
+    }
+
+    private function getOtherData(Request $request)
+    {
+        $data = [
+            'nav' => 'visual',
+            'area' => $this->my_area,
+            'tab' => 'other'
+        ];
+        return $data;
+    }
+
+    /**
+     *
+     * 设置地区
+     */
     private function setArea(Request $request)
     {
         if (Cookie::has('area')) {//如果cookie里有地区信息了
