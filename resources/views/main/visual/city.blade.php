@@ -172,7 +172,7 @@
         var data_range = echarts.init(document.getElementById('data-range'));
         option = {
             title: {
-                text: "数据走势图/@if ($date_type == 3)小时@elseif ($date_type == 2)天@else月@endif"
+                text: "数据走势图/单位@if ($date_type == 3)小时@elseif ($date_type == 2)天@else月@endif"
             },
             tooltip: {
                 trigger: 'axis'
