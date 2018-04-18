@@ -403,23 +403,21 @@
     </script>
 
     <script>
-        //同步数据
-        var url = 'https://sjipiao.alitrip.com/city_search.do?_ksTS=1439362066383_11337&lines=10&_input_charset=utf-8&needProvince=true&q=' + '{{ $province_name }}';
+        {{--var mapFeatures = echarts.getMap('{{ $province_name }}').geoJson.features;--}}
+        {{--var newMap = [];--}}
+        {{--mapFeatures.forEach(function(v) {--}}
+            {{--newMap.push(v.properties.name);--}}
+        {{--});--}}
+        {{--var url = '{{ route('areaPlus') }}';--}}
 
-        $.ajax({
-            url: url,
-            type: 'get',
-            dataType: 'jsonp'
-        }).done(function(re) {
-            console.log(re)
-        });
-
-        var mapFeatures = echarts.getMap('{{ $province_name }}').geoJson.features;
-        var newMap = [];
-        mapFeatures.forEach(function(v) {
-            newMap.push(v.properties.name);
-        });
-        console.log(newMap);
-
+        {{--console.log(newMap);--}}
+        {{--$.ajax({--}}
+            {{--url: url,--}}
+            {{--type: 'post',--}}
+            {{--dataType: 'json',--}}
+            {{--data:{'data' : JSON.stringify(newMap), 'province' :'{{ $province_name }}'}--}}
+        {{--}).done(function(re) {--}}
+            {{--console.log(re)--}}
+        {{--});--}}
     </script>
 @endsection

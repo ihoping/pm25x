@@ -30,3 +30,5 @@ Route::post('/changeArea', 'HomeController@changeArea')->name('changeArea');
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
+
+Route::post('/Info/area_plus', 'InfoController@areaPlus')->name('areaPlus');
