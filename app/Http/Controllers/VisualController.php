@@ -147,7 +147,11 @@ class VisualController extends Controller
                 DB::raw('avg(pm25) as pm25'),
                 DB::raw('avg(aqi) as aqi'),
             ])->toArray();
-            $pm25_max = max(array_column($section_info, 'pm25'));
+            if (array_column($section_info, 'pm25')) {
+                $pm25_max = max(array_column($section_info, 'pm25'));
+            } else {
+                $pm25_max = 500;
+            }
             $data = [
                 'pm25_max' => $pm25_max,
                 'pm25_aqi' => $pm25_aqi,
@@ -186,7 +190,11 @@ class VisualController extends Controller
             }
 
             //dump($section_info);exit();
-            $pm25_max = max(array_column($section_info, 'pm25'));
+            if (array_column($section_info, 'pm25')) {
+                $pm25_max = max(array_column($section_info, 'pm25'));
+            } else {
+                $pm25_max = 500;
+            }
             $data = [
                 'pm25_max' => $pm25_max,
                 'pm25_aqi' => $pm25_aqi,

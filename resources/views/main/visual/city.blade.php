@@ -57,7 +57,7 @@
         var data_number = echarts.init(document.getElementById('data-number'));
         var option = {
             title: {
-                text: '{{ $date }} 空气质量(平均)',
+                text: '{{ $date }}@if ($date_type == 3)日@elseif ($date_type == 2)月@else年@endif空气质量(平均)',
                 subtext: '',
 
             },
@@ -172,7 +172,7 @@
         var data_range = echarts.init(document.getElementById('data-range'));
         option = {
             title: {
-                text: "数据走势图@if ($date_type == 3) 小时 @endif"
+                text: "数据走势图/@if ($date_type == 3)小时@elseif ($date_type == 2)天@else月@endif"
             },
             tooltip: {
                 trigger: 'axis'
