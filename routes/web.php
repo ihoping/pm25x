@@ -26,6 +26,7 @@ Route::get('/rank/{type?}', 'RankController@index');
 Route::get('/visual', 'VisualController@index');
 
 Route::post('/changeArea', 'HomeController@changeArea')->name('changeArea');
+Route::post('/checkArea', 'HomeController@checkArea')->name('checkArea');
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

@@ -3,7 +3,7 @@
 @section('content')
     <div class="row content">
         <div class="col-md-6 address-number">
-            <p><i class="icon-map-marker"></i> {{ $pm25_details['area'] }}|优</p>
+            <p><i class="icon-map-marker"></i> {{ $pm25_details['area'] }}</p>
             <div id="data-number" style="height: 300px"></div>
             <p><strong>温馨提示：</strong><span class="note">空气质量可接受，但某些污染物可能对极少异常敏感人群健康有较弱影响。极少数异常敏感人群减少户外活动</span></p>
 

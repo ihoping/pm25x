@@ -85,6 +85,31 @@ class HomeController extends Controller
     }
 
     /*
+     * 检查
+     */
+    public function checkArea(Request $request)
+    {
+        $areas_obj = Areas::all();
+        foreach ($areas_obj as $row) {
+            $areas[] = $row->name;
+        }
+
+        $sub_area = $request->area;//用户提交的地区
+        foreach ($areas as $area) {
+            if (mb_strrpos($area, $sub_area) !== false) {
+                return response()->json([
+                    'area' => $area,
+                    'status' => 1
+                ]);
+            }
+        }
+
+        return response()->json([
+            'status' => 0
+        ]);
+    }
+
+    /*
      * 设置地区
      */
     private function setArea(Request $request)

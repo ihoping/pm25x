@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/3.0.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/kuCity.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.min.css') }}">
@@ -68,7 +68,7 @@
             <div class="col-md-6">
                 <ul class="nav nav-pills">
                     <li role="presentation" class="@if ($nav == 'home') selected @endif"><a href="{{ action('HomeController@index') }}"><i class="icon-home"></i> 首页</a></li>
-                    <li role="presentation" class="@if ($nav == 'visual') selected @endif"><a href="{{ action('VisualController@index') }}"><i class=" icon-leaf"></i> 数据可视化</a></li>
+                    <li role="presentation" class="@if ($nav == 'visual') selected @endif"><a href="{{ action('VisualController@index') }}"><i class=" icon-leaf"></i> 历史数据</a></li>
                     <li role="presentation" class="@if ($nav == 'rank') selected @endif"><a href="{{ action('RankController@index') }}"><i class="  icon-signal"></i> 排行榜</a></li>
                     <li role="presentation" class="@if ($nav == 'news') selected @endif"><a href="{{ action('NewsController@index') }}"><i class=" icon-bullhorn"></i> 资讯</a></li>
                 </ul>
