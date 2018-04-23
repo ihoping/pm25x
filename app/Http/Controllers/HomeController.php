@@ -43,7 +43,8 @@ class HomeController extends Controller
         $recent_24_data = Data::where('area', $this->my_area)->orderBy('id', 'desc')->take(24)->get()->toArray();
 
         //7天预测数据
-        $forecast = $this->get7days();
+        $forecast = $this->get12hours();
+
         $data = [
             'nav' => 'home',
             'area' => $this->my_area,
@@ -136,19 +137,13 @@ class HomeController extends Controller
     }
 
     /**
-     * 获取未来7天的预测数据
+     * 获取未来12小时的预测数据
      */
-    private function get7days()
+    private function get12hours()
     {
-        $seven_days = [];
-        $today = date('Y-m-d');
-        $i = 7;
-        while ($i--) {
-            $today = date('Y-m-d', strtotime('+1 day', strtotime($today)));
-            $seven_days[0][] = $today;
-            $seven_days[1][] = rand(40, 155);
-            $seven_days[2][] = rand(30, 50);
-        }
-        return $seven_days;
+        //调用python接口获取预测值
+        $forecasts = file_get_contents('https://hoping.me/py-ml/forecast/?area=' . $this->my_area);
+        $fore_arr = json_decode($forecasts, true);
+        return $fore_arr['forecast'];
     }
 }

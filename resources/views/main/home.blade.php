@@ -209,85 +209,72 @@
     </script>
     <script>
         var forecast = echarts.init(document.getElementById('forecast'));
-        var option = {
+        option = {
             title: {
-                text: '未来7天PM25浓度值预测',
-                subtext: '基于贝叶斯预测模型',
+                text: '未来12个小时PM25浓度值预测',
+                subtext: '基于Python Keras+LSTM单向量时间序列预测模型',
                 left: '50%',
                 textAlign: 'center'
             },
             tooltip: {
                 trigger: 'axis'
             },
-            legend: {
-                data: ['最高值', '最低值']
+
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
             },
             toolbox: {
-                show: true,
                 feature: {
-                    dataZoom: {},
-                    dataView: {readOnly: false},
-                    magicType: {type: ['line', 'bar']},
-                    restore: {},
                     saveAsImage: {}
                 }
             },
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: [
-                    @foreach ($forecast[0] as $v)
-                        '{{ $v }}',
-                    @endforeach
-                ]
+                data: [@foreach($forecast as $k => $v)'{{$k}}',@endforeach],
+                splitLine: { //设置X轴的网格
+                    show: true,
+                    interval: 'auto'
+                },
+                axisLine: { //设置X轴的颜色
+                    lineStyle: {
+                        color: 'blue'
+                    }
+                }
             },
             yAxis: {
                 type: 'value',
-                axisLabel: {
-                    formatter: '{value}'
+                axisLine: { //设置y轴的颜色
+                    lineStyle: {
+                        color: 'blue'
+                    }
                 }
             },
-            series: [
-                {
-                    name: '最高浓度',
-                    type: 'line',
-                    data: [
-                        @foreach ($forecast[1] as $v)
-                            {{ $v }},
-                        @endforeach
-                    ],
-                    markPoint: {
-                        data: [
-                            {type: 'max', name: '最大值'},
-                            {type: 'min', name: '最小值'}
-                        ]
-                    },
-                    markLine: {
-                        data: [
-                            {type: 'average', name: '平均值'}
-                        ]
+            series: [{
+                name: '预测值',
+                type: 'line',
+                smooth: true, //点与点之间的幅度,false为直线
+                label: { //设置点数据的提示
+                    normal: {
+                        show: true,
+                        position: 'bottom'
                     }
                 },
-                {
-                    name: '最低浓度',
-                    type: 'line',
-                    data: [
-                        @foreach ($forecast[2] as $v)
-                            {{ $v }},
-                        @endforeach
-                    ],
-                    markPoint: {
-                        data: [
-                            {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
-                        ]
-                    },
-                    markLine: {
-                        data: [
-                            {type: 'average', name: '平均值'}
-                        ]
-                    }
+                data: [{{ implode(',', array_values($forecast)) }}],
+                markPoint: { //设置最大值和最小值
+                    data: [{
+                        type: 'max',
+                        name: '最大值'
+                    }, {
+                        type: 'min',
+                        name: '最小值'
+                    }]
                 }
-            ]
+
+            }]
         };
 
         forecast.setOption(option);
