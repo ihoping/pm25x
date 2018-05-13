@@ -53,8 +53,8 @@
 
         </div>
         <div class="col-md-2 col-xs-6 address-search ">
-            <input type="text" placeholder="请输入您要搜索的内容...">
-            <button type="button"></button>
+            <input type="text" class="searchContent" placeholder="请输入您要搜索的内容...">
+            <button type="button" onclick="search()"></button>
         </div>
     </div>
     <!--头部地址与搜索end-->
@@ -169,6 +169,13 @@
             }
         });
     })
+</script>
+<script>
+    function search() {
+        var content = $('.searchContent').val();
+        location.href = "{{ route('news') }}?q=" +content;
+
+    }
 </script>
 @section('script')
     脚本。

@@ -34,6 +34,11 @@
             <div class="col-md-1"></div>
         </div>
     @endforeach
+    @if (!count($posts))
+        <div class="row news-content text-center">
+            <h3>暂无数据！</h3>
+        </div>
+    @endif
     <div class="text-center">
         {{ $posts->links() }}
     </div>

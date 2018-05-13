@@ -25,15 +25,19 @@ class NewsController extends Controller
     {
         //($request->route('id'));
         $this->setArea($request);
+        if ($request->get('q')) {
+            $posts = Posts::where('title', 'like', '%' . $request->get('q') . '%')->OrderBy('id', 'desc')->paginate(10);
+        } else {
+            $posts = Posts::OrderBy('id', 'desc')->paginate(10);
+        }
 
-        $posts = Posts::OrderBy('id', 'desc')->paginate(10);
 //        dd($posts);
         $data = [
             'nav' => 'news',
             'area' => $this->my_area,
             'posts' => $posts,
         ];
-
+        //dd($posts);
         return view('main.news', $data);
     }
 
