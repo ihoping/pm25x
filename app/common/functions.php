@@ -57,7 +57,10 @@ function pm25_detail($city)
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
     }
     $content = json_decode(curl_exec($curl), true);
-    if (!$content) return false;
+    if (!$content || isset($content['showapi_res_body']['error_info'])) {//网络出错
+        return null;
+    }
+
     $data = [
         'area' => $content['showapi_res_body']['pm']['area'],
         'pm25' => $content['showapi_res_body']['pm']['pm2_5'],

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Data;
+use App\Emergency;
 use Illuminate\Http\Request;
 use App\Areas;
 use Illuminate\Support\Facades\Cookie;
@@ -34,15 +35,21 @@ class HomeController extends Controller
 
         /*获取pm25详细数据*/
         $pm25_details = pm25_detail($this->my_area);
-
-        if (!$pm25_details) {//如果因为网络原因获取失败
-            abort(504, '抱歉，请求超时<a href="' . url('/') . '" style="color: #1b6d85">重新刷新</a>');
+        if (!$pm25_details) {//如果因为网络原因获取失败则去备份里取
+           $emergency = Emergency::where('city', $this->my_area)->first();
+           $pm25_details = json_decode($emergency->body, true);
         }
 
+        //优化显示
+        if (isset($pm25_details['sites'][9])) {
+            $pm25_details['sites'] = array_slice($pm25_details['sites'], 0, 8);
+        }
+
+        //dd($pm25_details['sites']);
         /*获取最近24小时pm25以及aqi数据*/
         $recent_24_data = Data::where('area', $this->my_area)->orderBy('id', 'desc')->take(24)->get()->toArray();
 
-        //7天预测数据
+        //未来12小时预测数据
         $forecast = $this->get12hours();
 
         $data = [
