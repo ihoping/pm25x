@@ -75,6 +75,14 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Warning!</strong>本站作为一个毕业设计已经完成了它的使命，数据停止更新于2018-06-07，本站数据范围：2014-05-13至2018-06-07
+            </div>
+        </div>
+    </div>
     <!--导航end-->
     <!--内容区-->
     @section('content')
@@ -88,7 +96,7 @@
         </div>
         <div class="col-md-8 copyright">
             <p><a target="_blank" href="https://wpa.qq.com/msgrd?v=3&uin=1490771889&site=qq&menu=yes">联系作者</a> | <a
-                        href="https://github.com/for-light">Github</a> | <a target="_blank"
+                        href="https://github.com/ihoping">Github</a> | <a target="_blank"
                                                                             href="https://blog.hoping.me">博客</a> | <a
                         target="_blank" href="about.html">关于</a></p>
             <p>Powered By Lu tian song 版权所有</p>
